@@ -131,7 +131,6 @@ public class PlayerMovement : MonoBehaviour
             terrainController.SetColliderActive(TerrainController.ColourState.green, true);
         }
         anim.SetInteger("colour_state", (int)currentColourState);
-        
     }
 
     private void UpdateAnimationState()
