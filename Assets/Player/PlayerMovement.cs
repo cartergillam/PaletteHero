@@ -37,7 +37,6 @@ public class PlayerMovement : MonoBehaviour
     private Tilemap[] terrainTilemaps;
     private bool isAttacking = false;
     private float lastDirX;
-    public CoinManager cm;
 
 
     // Start is called before the first frame update
@@ -99,20 +98,20 @@ public class PlayerMovement : MonoBehaviour
 
         // Perform a circle cast downwards to check for collisions at the player's feet
         float castRadius = 0.35f; // Adjust the radius based on your player's size
-        RaycastHit2D[] hits = Physics2D.CircleCastAll(checkPosition, castRadius, Vector2.down, 0.1f, groundLayers);
+        RaycastHit2D hit = Physics2D.CircleCast(checkPosition, castRadius, Vector2.down, 0.1f, groundLayers);
 
-        // Check if any of the circle casts hit something
-        foreach (RaycastHit2D hit in hits)
+        // Check if the circle cast hit something
+        if (hit.collider != null)
         {
-            // Ensure that the contact point is below the player's feet
-            if (Vector2.Dot(hit.normal, Vector2.up) > 0.7f)
-            {
-                return true;
-            }
+            return true;
         }
-
-        return false;
+        else
+        {
+            return false;
+        }
     }
+
+
 
     private void CheckColourState()
     {
@@ -191,15 +190,5 @@ public class PlayerMovement : MonoBehaviour
         anim.ResetTrigger("attack");
         anim.SetTrigger("return");
         isAttacking = false;
-    }
-
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if(other.gameObject.CompareTag("Coin"))
-        {
-            Destroy(other.gameObject);
-            cm.cointCount++;
-        }
     }
 }
