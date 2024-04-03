@@ -99,20 +99,20 @@ public class PlayerMovement : MonoBehaviour
 
         // Perform a circle cast downwards to check for collisions at the player's feet
         float castRadius = 0.35f; // Adjust the radius based on your player's size
-        RaycastHit2D hit = Physics2D.CircleCast(checkPosition, castRadius, Vector2.down, 0.1f, groundLayers);
+        RaycastHit2D[] hits = Physics2D.CircleCastAll(checkPosition, castRadius, Vector2.down, 0.1f, groundLayers);
 
-        // Check if the circle cast hit something
-        if (hit.collider != null)
+        // Check if any of the circle casts hit something
+        foreach (RaycastHit2D hit in hits)
         {
-            return true;
+            // Ensure that the contact point is below the player's feet
+            if (Vector2.Dot(hit.normal, Vector2.up) > 0.7f)
+            {
+                return true;
+            }
         }
-        else
-        {
-            return false;
-        }
+
+        return false;
     }
-
-
 
     private void CheckColourState()
     {
