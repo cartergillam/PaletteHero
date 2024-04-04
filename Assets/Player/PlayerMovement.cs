@@ -10,7 +10,9 @@ using UnityEngine.Tilemaps;
 
 public class PlayerMovement : MonoBehaviour
 { 
+    public Enums.ColourState currentColourState;
     [SerializeField] private Tilemap groundTilemap;
+    [SerializeField] private BoxCollider2D playerCollider;
     private Rigidbody2D myRigidbody;
     private Animator anim;
     private SpriteRenderer spriteRenderer;
@@ -31,8 +33,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private TerrainController terrainController;
     private enum MovementState {idle, running, jumping, falling, attack}
     private MovementState currentMovementState = MovementState.idle;
-    public enum ColourState { red, blue, green }
-    public ColourState currentColourState = ColourState.red;
     private bool isGrounded;
     private Tilemap[] terrainTilemaps;
     private bool isAttacking = false;
@@ -46,6 +46,7 @@ public class PlayerMovement : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         terrainTilemaps = FindObjectsOfType<Tilemap>();
+        currentColourState = Enums.ColourState.red;
     }
 
     // Update is called once per frame
@@ -75,15 +76,15 @@ public class PlayerMovement : MonoBehaviour
 
         switch (currentColourState)
         {
-            case ColourState.red:
+            case Enums.ColourState.red:
                 // Check collisions with terrain_neutral and terrain_red
                 groundLayers = groundLayer | LayerMask.GetMask("terrain_red");
                 break;
-            case ColourState.blue:
+            case Enums.ColourState.blue:
                 // Check collisions with terrain_neutral and terrain_blue
                 groundLayers = groundLayer | LayerMask.GetMask("terrain_blue");
                 break;
-            case ColourState.green:
+            case Enums.ColourState.green:
                 // Check collisions with terrain_neutral and terrain_green
                 groundLayers = groundLayer | LayerMask.GetMask("terrain_green");
                 break;
@@ -117,17 +118,17 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Comma))
         {
-            currentColourState = ColourState.red;
+            currentColourState = Enums.ColourState.red;
             terrainController.SetColliderActive(TerrainController.ColourState.red, true);
         }
         else if (Input.GetKeyDown(KeyCode.Period))
         {
-            currentColourState = ColourState.blue;
+            currentColourState = Enums.ColourState.blue;
             terrainController.SetColliderActive(TerrainController.ColourState.blue, true);
         }
         else if (Input.GetKeyDown(KeyCode.Slash))
         {
-            currentColourState = ColourState.green;
+            currentColourState = Enums.ColourState.green;
             terrainController.SetColliderActive(TerrainController.ColourState.green, true);
         }
         anim.SetInteger("colour_state", (int)currentColourState);
