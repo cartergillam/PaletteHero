@@ -10,6 +10,7 @@ TagManager:
   - GroundGreen
   - Coin
   - Wall
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -23,7 +24,7 @@ TagManager:
   - terrain_neutral
   - terrain_walls
   - Canvas
-  - 
+  - Enemy
   - 
   - 
   - 
