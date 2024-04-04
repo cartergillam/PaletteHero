@@ -11082,7 +11082,7 @@ CompositeCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_GeometryType: 0
+  m_GeometryType: 1
   m_GenerationType: 0
   m_EdgeRadius: 0
   m_ColliderPaths:
@@ -12085,14 +12085,14 @@ CompositeCollider2D:
       - {x: 42.999973, y: 3}
       - {x: 42, y: 2.999971}
       - {x: 42.00003, y: 2}
-    - - {x: 313.99997, y: 0}
-      - {x: 313.99997, y: 1}
-      - {x: 313, y: 0.99997073}
-      - {x: 313.00003, y: 0}
     - - {x: 38.999973, y: 0}
       - {x: 38.999973, y: 1}
       - {x: 36, y: 0.99997073}
       - {x: 36.00003, y: 0}
+    - - {x: 313.99997, y: 0}
+      - {x: 313.99997, y: 1}
+      - {x: 313, y: 0.99997073}
+      - {x: 313.00003, y: 0}
     - - {x: 320.99997, y: -1}
       - {x: 320.99997, y: 0}
       - {x: 320, y: -0.000029300001}
@@ -21658,7 +21658,7 @@ CompositeCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_GeometryType: 0
+  m_GeometryType: 1
   m_GenerationType: 0
   m_EdgeRadius: 0
   m_ColliderPaths: []
@@ -57232,7 +57232,7 @@ CompositeCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_GeometryType: 0
+  m_GeometryType: 1
   m_GenerationType: 0
   m_EdgeRadius: 0
   m_ColliderPaths: []
@@ -58308,7 +58308,7 @@ CompositeCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_GeometryType: 0
+  m_GeometryType: 1
   m_GenerationType: 0
   m_EdgeRadius: 0
   m_ColliderPaths: []
