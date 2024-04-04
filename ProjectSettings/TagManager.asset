@@ -9,6 +9,7 @@ TagManager:
   - GroundBlue
   - GroundGreen
   - Coin
+  - Wall
   layers:
   - Default
   - TransparentFX
