@@ -27,15 +27,19 @@ public class Store : MonoBehaviour
 
     public void TaskOnClick()
     {
-        int test = hb.EarnHeart();
-        if(test == 1)
+        if (cm.coinCount > 4)
         {
-            cm.coinCount -= 5;
+            int test = hb.EarnHeart();
+            if (test == 1)
+            {
+                cm.coinCount -= 5;
+            }
+            else
+            {
+
+            }
         }
-        else
-        {
-            
-        }
+        
         
     }
 
