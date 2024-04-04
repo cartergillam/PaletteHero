@@ -7,6 +7,8 @@ public class HealthBar : MonoBehaviour
     public int health = 5;
     public int maxHealth = 5;
     private List<HealthHeart> hearts = new List<HealthHeart>();
+    
+    public GameObject gameOverMenu;
 
     void Start()
     {
@@ -22,6 +24,12 @@ public class HealthBar : MonoBehaviour
     {
         health = Mathf.Max(0, health - damage);
         UpdateHearts();
+
+        if (health == 0)
+        {
+            gameOverMenu.SetActive(true);
+            Time.timeScale = 0f;
+        }
     }
 
     private void UpdateHearts()
