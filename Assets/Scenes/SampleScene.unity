@@ -252,7 +252,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a81b7c58518ed1a4c8abb6dce326c8a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentColourState: 0
   groundTilemap: {fileID: 838035436}
+  playerCollider: {fileID: 0}
   moveSpeed: 8
   jumpPower: 10
   groundCheck: {fileID: 791232820}
@@ -275,7 +277,6 @@ MonoBehaviour:
   terrain_blue: {fileID: 1803535189}
   terrain_green: {fileID: 1592697057}
   terrainController: {fileID: 40163239}
-  currentColourState: 0
 --- !u!95 &40163237
 Animator:
   serializedVersion: 5
@@ -355,10 +356,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   terrainNeutral: {fileID: 838035436}
+  currentShoeColor: 0
   terrainRed: {fileID: 974463036}
   terrainBlue: {fileID: 1803535189}
   terrainGreen: {fileID: 1592697057}
-  currentShoeColor: 0
 --- !u!1 &95022277
 GameObject:
   m_ObjectHideFlags: 0
@@ -10976,7 +10977,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4144759293047712916, guid: cf3cdd7860c68bb4eb17ff05e00e89e4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2139408981}
   m_SourcePrefab: {fileID: 100100000, guid: cf3cdd7860c68bb4eb17ff05e00e89e4, type: 3}
 --- !u!1 &791232819
 GameObject:
@@ -58771,6 +58775,25 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2139408974 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4144759293047712916, guid: cf3cdd7860c68bb4eb17ff05e00e89e4, type: 3}
+  m_PrefabInstance: {fileID: 732120280}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2139408981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2139408974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80030e861ff44674da943dce229ede5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 40163230}
+  respawnPoint: {fileID: 846906811}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
