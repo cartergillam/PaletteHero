@@ -41,9 +41,16 @@ public class HealthBar : MonoBehaviour
         }
     }
 
-    public void EarnHeart()
+    public int EarnHeart()
     {
-        health++;
-        UpdateHearts();
+        if (health != 5)
+        {
+            health = health + 1;
+            UpdateHearts();
+            return 1;
+            
+        }
+        return 0;
+        
     }
 }

@@ -18,4 +18,9 @@ public class CoinManager : MonoBehaviour
     {
         coinText.text = coinCount.ToString();
     }
+
+    public void Bought()
+    {
+        
+    }
 }

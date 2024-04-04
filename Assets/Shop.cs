@@ -11,6 +11,7 @@ public class Store : MonoBehaviour
     private bool triggerPlayer;
     public GameObject UI_Shop;
     public HealthBar hb;
+    public CoinManager cm;
 
 
     public void Start()
@@ -26,7 +27,16 @@ public class Store : MonoBehaviour
 
     public void TaskOnClick()
     {
-        hb.EarnHeart();
+        int test = hb.EarnHeart();
+        if(test == 1)
+        {
+            cm.coinCount -= 5;
+        }
+        else
+        {
+            
+        }
+        
     }
 
     public void OnTriggerEnter2D(Collider2D other)
