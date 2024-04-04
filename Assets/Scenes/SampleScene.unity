@@ -252,7 +252,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a81b7c58518ed1a4c8abb6dce326c8a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentColourState: 0
   groundTilemap: {fileID: 838035436}
+  playerCollider: {fileID: 0}
   moveSpeed: 8
   jumpPower: 10
   groundCheck: {fileID: 791232820}
@@ -275,7 +277,6 @@ MonoBehaviour:
   terrain_blue: {fileID: 1803535189}
   terrain_green: {fileID: 1592697057}
   terrainController: {fileID: 40163239}
-  currentColourState: 0
 --- !u!95 &40163237
 Animator:
   serializedVersion: 5
@@ -355,10 +356,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   terrainNeutral: {fileID: 838035436}
+  currentShoeColor: 0
   terrainRed: {fileID: 974463036}
   terrainBlue: {fileID: 1803535189}
   terrainGreen: {fileID: 1592697057}
-  currentShoeColor: 0
 --- !u!1 &95022277
 GameObject:
   m_ObjectHideFlags: 0
@@ -11054,7 +11055,7 @@ CompositeCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_GeometryType: 0
+  m_GeometryType: 1
   m_GenerationType: 0
   m_EdgeRadius: 0
   m_ColliderPaths:
@@ -12057,14 +12058,14 @@ CompositeCollider2D:
       - {x: 42.999973, y: 3}
       - {x: 42, y: 2.999971}
       - {x: 42.00003, y: 2}
-    - - {x: 313.99997, y: 0}
-      - {x: 313.99997, y: 1}
-      - {x: 313, y: 0.99997073}
-      - {x: 313.00003, y: 0}
     - - {x: 38.999973, y: 0}
       - {x: 38.999973, y: 1}
       - {x: 36, y: 0.99997073}
       - {x: 36.00003, y: 0}
+    - - {x: 313.99997, y: 0}
+      - {x: 313.99997, y: 1}
+      - {x: 313, y: 0.99997073}
+      - {x: 313.00003, y: 0}
     - - {x: 320.99997, y: -1}
       - {x: 320.99997, y: 0}
       - {x: 320, y: -0.000029300001}
@@ -21630,7 +21631,7 @@ CompositeCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_GeometryType: 0
+  m_GeometryType: 1
   m_GenerationType: 0
   m_EdgeRadius: 0
   m_ColliderPaths: []
@@ -57204,7 +57205,7 @@ CompositeCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_GeometryType: 0
+  m_GeometryType: 1
   m_GenerationType: 0
   m_EdgeRadius: 0
   m_ColliderPaths: []
@@ -58280,7 +58281,7 @@ CompositeCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_GeometryType: 0
+  m_GeometryType: 1
   m_GenerationType: 0
   m_EdgeRadius: 0
   m_ColliderPaths: []
