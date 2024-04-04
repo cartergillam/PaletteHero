@@ -8,13 +8,15 @@ public class SlimePatrol : MonoBehaviour
     private Rigidbody2D rb;
     private Animator anim;
     private Transform currentPoint;
+    private const float directionThreshold = 0.1f; // Tolerance threshold for direction check
+    private bool facingRight = true; // Keeps track of the sprite's facing direction
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
 
-        // Validate the Rigidbody2D and Animator components
+        // Validate components and points
         if (rb == null)
         {
             Debug.LogError("Rigidbody2D component not found on " + gameObject.name);
@@ -23,8 +25,6 @@ public class SlimePatrol : MonoBehaviour
         {
             Debug.LogError("Animator component not found on " + gameObject.name);
         }
-
-        // Validate pointA and pointB, then initialize currentPoint
         if (pointA == null || pointB == null)
         {
             Debug.LogError("PointA and/or PointB not set on " + gameObject.name);
@@ -64,14 +64,18 @@ public class SlimePatrol : MonoBehaviour
         rb.velocity = direction * speed;
 
         // Check direction to flip the sprite if necessary
-        if ((currentPoint == pointA.transform && direction.x > 0) || (currentPoint == pointB.transform && direction.x < 0))
+        if (Mathf.Abs(direction.x) > directionThreshold)
         {
-            Flip();
+            if (direction.x > 0 && !facingRight || direction.x < 0 && facingRight)
+            {
+                Flip();
+            }
         }
     }
 
     private void Flip()
     {
+        facingRight = !facingRight;
         Vector3 localScale = transform.localScale;
         localScale.x *= -1;
         transform.localScale = localScale;
