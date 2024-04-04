@@ -38,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
     private bool isAttacking = false;
     private float lastDirX;
 
-
+    public CoinManager cm;
     // Start is called before the first frame update
     private void Start()
     {
@@ -190,5 +190,14 @@ public class PlayerMovement : MonoBehaviour
         anim.ResetTrigger("attack");
         anim.SetTrigger("return");
         isAttacking = false;
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Coin"))
+        {
+            Destroy(other.gameObject);
+            cm.coinCount++;
+        }
     }
 }
