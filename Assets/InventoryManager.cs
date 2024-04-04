@@ -18,12 +18,14 @@ public class InventoryManager : MonoBehaviour
     {
         if(Input.GetButtonDown("Inventory") && menuActivated)
         {
+            Time.timeScale = 1;
             InventoryMenu.SetActive(false);
             menuActivated = false;
         }
 
         else if (Input.GetButtonDown("Inventory") && !menuActivated)
         {
+            Time.timeScale = 0;
             InventoryMenu.SetActive(true);
             menuActivated = true;
         }
