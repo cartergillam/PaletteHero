@@ -3,7 +3,14 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Ground
+  - GroundRed
+  - GroundBlue
+  - GroundGreen
+  - Coin
+  - Wall
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -11,13 +18,13 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - terrain_red
+  - terrain_blue
+  - terrain_green
+  - terrain_neutral
+  - terrain_walls
+  - Canvas
+  - Enemy
   - 
   - 
   - 
@@ -38,6 +45,21 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 3840203095
+    locked: 0
+  - name: Background2
+    uniqueID: 1381968011
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: terrain_red, terrain_blue, terrain_green
+    uniqueID: 270641783
+    locked: 0
+  - name: terrain_neutral
+    uniqueID: 1259629999
+    locked: 0
+  - name: Canvas, PauseButton, PauseMenu, Resume, MainMenu, Quit
+    uniqueID: 4200502565
     locked: 0
