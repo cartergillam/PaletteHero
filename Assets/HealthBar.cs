@@ -17,8 +17,10 @@ public class HealthBar : MonoBehaviour
             var heart = Instantiate(heartPrefab, transform).GetComponent<HealthHeart>();
             hearts.Add(heart);
         }
+
         UpdateHearts();
     }
+
 
     public void TakeDamage(int damage)
     {
@@ -38,5 +40,11 @@ public class HealthBar : MonoBehaviour
         {
             hearts[i].UpdateHeart(i < health ? HeartStatus.Full : HeartStatus.Empty);
         }
+    }
+
+    public void EarnHeart()
+    {
+        health++;
+        UpdateHearts();
     }
 }
