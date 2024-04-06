@@ -37,8 +37,8 @@ public class PlayerMovement : MonoBehaviour
     private Tilemap[] terrainTilemaps;
     private bool isAttacking = false;
     private float lastDirX;
-
     public CoinManager cm;
+    private bool isPaused = false;
     // Start is called before the first frame update
     private void Start()
     {
@@ -52,22 +52,24 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (!isAttacking)
+        if (!isPaused)
         {
-            dirX = Input.GetAxisRaw("Horizontal");
-            myRigidbody.velocity = new Vector2(dirX* moveSpeed, myRigidbody.velocity.y);
-            if (dirX != 0)
+            if (!isAttacking)
             {
-                lastDirX = dirX;
+                dirX = Input.GetAxisRaw("Horizontal");
+                myRigidbody.velocity = new Vector2(dirX* moveSpeed, myRigidbody.velocity.y);
+                if (dirX != 0)
+                {
+                    lastDirX = dirX;
+                }
+                if (Input.GetKeyDown(KeyCode.W) && IsGrounded())
+                {
+                    myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, jumpPower);
+                }
+                CheckColourState();
+                UpdateAnimationState();
             }
-            if (Input.GetKeyDown(KeyCode.W) && IsGrounded())
-            {
-                myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, jumpPower);
-            }
-            CheckColourState();
-            UpdateAnimationState();
         }
-
     }
     private bool IsGrounded()
     {
@@ -199,5 +201,17 @@ public class PlayerMovement : MonoBehaviour
             Destroy(other.gameObject);
             cm.coinCount++;
         }
+    }
+
+    public void Pause()
+    {
+        Debug.Log("Paused");
+        isPaused = true;
+    }
+
+    public void Resume()
+    {
+        Debug.Log("resumes");
+        isPaused = false;
     }
 }
