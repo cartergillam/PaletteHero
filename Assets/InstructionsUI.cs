@@ -1,6 +1,6 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
 public class InstructionsUI : MonoBehaviour
 {
     private Animator anim;
@@ -8,6 +8,7 @@ public class InstructionsUI : MonoBehaviour
     private GameObject Instructions;
     private GameObject RightArrow;
     private int slide;
+
     private void Start()
     {
         LeftArrow = GameObject.Find("LeftArrow");
@@ -15,56 +16,39 @@ public class InstructionsUI : MonoBehaviour
         Instructions = GameObject.Find("Instructions");
         anim = Instructions.GetComponent<Animator>();
         slide = 1;
-        LeftArrow.SetActive(false);
+        UpdateArrowVisibility();
     }
 
     public void ChangeSlide(string direction)
     {
         char arrow = direction[0];
-        if (slide == 1)
+        if (arrow == 'l')
         {
-            anim.SetBool("two", true);
-            anim.SetBool("one", false);
-            anim.SetBool("three", false);
-            slide = 2;
-            LeftArrow.SetActive(true);
-            return;
-        }
-        else if (slide == 2)
-        {
-            LeftArrow.SetActive(true);
-            RightArrow.SetActive(true);
-            if (arrow == 'l')
-            {
-                anim.SetBool("one", true);
-                anim.SetBool("two", false);
-                anim.SetBool("three", false);
-                LeftArrow.SetActive(false);
-                slide = 1;
-                return;
-            }
-            else
-            {
-                anim.SetBool("three", true);
-                anim.SetBool("one", false);
-                anim.SetBool("two", false);
-                RightArrow.SetActive(false);
-                slide = 3;
-                return;
-            }
+            if (slide > 1)
+                slide--;
         }
         else
         {
-            RightArrow.SetActive(true);
-            if (arrow == 'l')
-            {
-                anim.SetBool("two", true);
-                anim.SetBool("one", false);
-                anim.SetBool("three", false);
-                slide = 2;
-                return;
-            }
-        }   
+            if (slide < 8)
+                slide++;
+        }
+
+        UpdateSlideAnimation();
+        UpdateArrowVisibility();
+    }
+
+    private void UpdateSlideAnimation()
+    {
+        for (int i = 1; i <= 8; i++)
+        {
+            anim.SetBool("slide" + i, i == slide);
+        }
+    }
+
+    private void UpdateArrowVisibility()
+    {
+        LeftArrow.SetActive(slide > 1);
+        RightArrow.SetActive(slide < 8);
     }
 
     public void MainMenu(string sceneName)

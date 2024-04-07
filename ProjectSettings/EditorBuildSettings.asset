@@ -9,9 +9,18 @@ EditorBuildSettings:
     path: Assets/Main Menu/Main Menu.unity
     guid: 1b2b9ddf3454e43a5be78b46a0751cf2
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
+    path: Assets/Main Menu/Difficulty.unity
+    guid: fc77dff23064b4c008d2dedec28ff307
   - enabled: 1
     path: Assets/Instructions/Instructions.unity
     guid: 15f191c52fbb04cfe8c060d7b93af399
+  - enabled: 1
+    path: Assets/Scenes/SampleScene.unity
+    guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/SampleSceneEasy.unity
+    guid: d520cdf7dc0bc42aab1dc45870ef029e
+  - enabled: 1
+    path: Assets/Scenes/SampleSceneHard.unity
+    guid: 3057853ac863e42a48182507bc955668
   m_configObjects: {}
