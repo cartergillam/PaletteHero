@@ -37,6 +37,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Tilemap terrain_green;
     [SerializeField] private TerrainController terrainController;
     [SerializeField] private AudioClip attackSound; 
+    [SerializeField] private AudioClip jumpSound;
     private AudioSource audioSource;
     private enum MovementState {idle, running, jumping, falling, attack}
     private MovementState currentMovementState = MovementState.idle;
@@ -75,7 +76,7 @@ public class PlayerMovement : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.W) && IsGrounded())
                 {
                     myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, jumpPower);
-                    
+                    audioSource.PlayOneShot(jumpSound);
                 }
 
                 CheckColourState();
