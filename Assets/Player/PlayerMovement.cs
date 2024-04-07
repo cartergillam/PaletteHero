@@ -36,6 +36,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Tilemap terrain_blue;
     [SerializeField] private Tilemap terrain_green;
     [SerializeField] private TerrainController terrainController;
+    [SerializeField] private AudioClip attackSound; 
+    private AudioSource audioSource;
     private enum MovementState {idle, running, jumping, falling, attack}
     private MovementState currentMovementState = MovementState.idle;
     private bool isGrounded;
@@ -52,7 +54,8 @@ public class PlayerMovement : MonoBehaviour
         anim = GetComponent<Animator>();
         terrainTilemaps = FindObjectsOfType<Tilemap>();
         currentColourState = Enums.ColourState.red;
-
+        audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.clip = attackSound;
         
     }
 
@@ -72,6 +75,7 @@ public class PlayerMovement : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.W) && IsGrounded())
                 {
                     myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, jumpPower);
+                    audioSource.Play();
                 }
                 CheckColourState();
                 UpdateAnimationState();
