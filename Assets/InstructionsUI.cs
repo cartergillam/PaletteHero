@@ -32,7 +32,7 @@ public class InstructionsUI : MonoBehaviour
         }
         else
         {
-            if (slide < 8)
+            if (slide < 9)
                 slide++;
         }
 
@@ -42,7 +42,7 @@ public class InstructionsUI : MonoBehaviour
 
     private void UpdateSlideAnimation()
     {
-        for (int i = 1; i <= 8; i++)
+        for (int i = 1; i <= 9; i++)
         {
             anim.SetBool("slide" + i, i == slide);
         }
@@ -51,7 +51,7 @@ public class InstructionsUI : MonoBehaviour
     private void UpdateArrowVisibility()
     {
         LeftArrow.SetActive(slide > 1);
-        RightArrow.SetActive(slide < 8);
+        RightArrow.SetActive(slide < 9);
     }
 
     public void MainMenu(string sceneName)
