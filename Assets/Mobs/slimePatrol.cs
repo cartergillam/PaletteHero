@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class SlimePatrol : MonoBehaviour
@@ -12,8 +11,9 @@ public class SlimePatrol : MonoBehaviour
     private Transform currentPoint;
     private const float directionThreshold = 0.1f; // Tolerance threshold for direction check
     private bool facingRight = true; // Keeps track of the sprite's facing direction
+    private Vector3 initialPosition;
 
-    void Start()
+    private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
@@ -38,7 +38,7 @@ public class SlimePatrol : MonoBehaviour
         }
     }
 
-    void Update()
+    private void Update()
     {
         if (currentPoint == null || rb == null) return; // Ensure we have a target and a Rigidbody2D
 
@@ -60,7 +60,7 @@ public class SlimePatrol : MonoBehaviour
         }
     }
 
-    void MoveTowardsCurrentPoint()
+    private void MoveTowardsCurrentPoint()
     {
         Vector2 direction = ((Vector2)currentPoint.position - rb.position).normalized;
         rb.velocity = direction * speed;
