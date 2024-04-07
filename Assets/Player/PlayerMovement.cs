@@ -75,8 +75,9 @@ public class PlayerMovement : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.W) && IsGrounded())
                 {
                     myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, jumpPower);
-                    audioSource.Play();
+                    
                 }
+
                 CheckColourState();
                 UpdateAnimationState();
             }
@@ -157,8 +158,10 @@ public class PlayerMovement : MonoBehaviour
         {
             anim.SetTrigger("attack");
             Attack();
+            audioSource.Play();
             // Set a delay before transitioning back to idle
             StartCoroutine(TransitionToIdleAfterDelay());
+            
         }
         if (isGrounded)
         {
