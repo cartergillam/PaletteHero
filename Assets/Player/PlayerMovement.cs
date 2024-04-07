@@ -55,9 +55,14 @@ public class PlayerMovement : MonoBehaviour
         anim = GetComponent<Animator>();
         terrainTilemaps = FindObjectsOfType<Tilemap>();
         currentColourState = Enums.ColourState.red;
+<<<<<<< Updated upstream
         audioSource = gameObject.AddComponent<AudioSource>();
         audioSource.clip = attackSound;
         
+=======
+         Health healthComponent = GetComponent<Health>();
+        healthComponent.Awake();
+>>>>>>> Stashed changes
     }
 
     // Update is called once per frame

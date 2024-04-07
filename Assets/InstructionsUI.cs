@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class InstructionsUI : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class InstructionsUI : MonoBehaviour
     private GameObject Instructions;
     private GameObject RightArrow;
     private int slide;
+    public AudioSource audioSource;
+    public AudioClip audioClip;
 
     private void Start()
     {
@@ -53,6 +56,16 @@ public class InstructionsUI : MonoBehaviour
 
     public void MainMenu(string sceneName)
     {
+        audioSource.PlayOneShot(audioClip);
+        // Delay the scene change
+        StartCoroutine(DelayedSceneChange(sceneName));
+    }
+    IEnumerator DelayedSceneChange(string sceneName)
+    {
+        // Wait for the length of the audio clip
+        yield return new WaitForSeconds(audioClip.length);
+
+        // Change scene
         SceneManager.LoadScene(sceneName);
     }
 }
