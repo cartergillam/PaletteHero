@@ -10,6 +10,9 @@ using UnityEngine.Tilemaps;
 
 public class PlayerMovement : MonoBehaviour
 { 
+    private bool isFacingRight = true;
+    private float attackRange = 2.5f;
+    [SerializeField] private LayerMask enemyLayer;
     public Enums.ColourState currentColourState;
     [SerializeField] private Tilemap groundTilemap;
     [SerializeField] private BoxCollider2D playerCollider;
@@ -145,6 +148,7 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             anim.SetTrigger("attack");
+            Attack();
             // Set a delay before transitioning back to idle
             StartCoroutine(TransitionToIdleAfterDelay());
         }
@@ -154,11 +158,13 @@ public class PlayerMovement : MonoBehaviour
             {
                 state = MovementState.running;
                 spriteRenderer.flipX = false;
+                isFacingRight = true;
             }
             else if (dirX < 0f)
             {
                 state = MovementState.running;
                 spriteRenderer.flipX = true;
+                isFacingRight = false;
             }
             else
             {
@@ -199,19 +205,42 @@ public class PlayerMovement : MonoBehaviour
         if (other.gameObject.CompareTag("Coin"))
         {
             Destroy(other.gameObject);
+            ScoreManager.instance.AddPoints(250);
             cm.coinCount++;
         }
     }
 
     public void Pause()
     {
-        Debug.Log("Paused");
         isPaused = true;
     }
 
     public void Resume()
     {
-        Debug.Log("resumes");
         isPaused = false;
     }
+
+    private void Attack()
+    {
+        // Define the direction of the attack based on the player's facing direction
+        Vector2 attackDirection = isFacingRight ? Vector2.right : Vector2.left;
+
+        // Define the size of the ellipse based on the attack range
+        Vector2 ellipseSize = new Vector2(attackRange * 2f, 2f);
+
+        // Cast an ellipse in the attack direction
+        Collider2D[] colliders = Physics2D.OverlapBoxAll(transform.position + (Vector3)attackDirection * attackRange, ellipseSize, 0f, enemyLayer);
+
+        // Damage enemies if they are hit
+        foreach (Collider2D collider in colliders)
+        {
+            // Check if the collided object is an enemy
+            if (collider.CompareTag("Enemy"))
+            {
+                // Destroy the enemy object
+                Destroy(collider.gameObject);
+            }
+        }
+    }
+
 }

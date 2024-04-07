@@ -60,6 +60,9 @@ TagManager:
   - name: terrain_neutral
     uniqueID: 1259629999
     locked: 0
+  - name: Enemy
+    uniqueID: 1533014861
+    locked: 0
   - name: Canvas, PauseButton, PauseMenu, Resume, MainMenu, Quit
     uniqueID: 4200502565
     locked: 0
