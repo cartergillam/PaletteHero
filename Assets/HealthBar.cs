@@ -4,7 +4,7 @@ using UnityEngine;
 public class HealthBar : MonoBehaviour
 {
     public GameObject heartPrefab;
-    public int health = 3;
+    public int health = 5;
     public int maxHealth = 5;
     private List<HealthHeart> hearts = new List<HealthHeart>();
     public GameObject gameOverMenu;
