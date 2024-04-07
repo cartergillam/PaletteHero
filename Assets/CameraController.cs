@@ -12,6 +12,8 @@ public class CameraController : MonoBehaviour
     private Camera thisCamera;
     [SerializeField] private Transform player;
     private bool isZoomedOut = false;
+    private float attackShakeFactor = 0.6f;
+    private float attackShakeDuration = 0.02f; // Duration of the attack shake effect
 
     private void Start()
     {
@@ -37,5 +39,33 @@ public class CameraController : MonoBehaviour
         {
             thisCamera.orthographicSize = Mathf.Lerp(thisCamera.orthographicSize, targetSize, Time.deltaTime * zoomSpeed);
         }
+    }
+
+    public void AttackShake()
+    {
+        StartCoroutine(PerformAttackShake());
+    }
+
+    private IEnumerator PerformAttackShake()
+    {
+        if (isZoomedOut)
+        {
+            attackShakeFactor = 1.1f;
+        }
+        else {attackShakeFactor = 0.6f;}
+
+            float targetSize = originalSize * attackShakeFactor;
+            float elapsedTime = 0f;
+
+            // Interpolate the camera size towards the target size over the specified duration
+            while (elapsedTime < attackShakeDuration)
+            {
+                thisCamera.orthographicSize = Mathf.Lerp(thisCamera.orthographicSize, targetSize, elapsedTime / attackShakeDuration);
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            // Ensure the camera size is set to the target size at the end of the duration
+            thisCamera.orthographicSize = targetSize;
     }
 }

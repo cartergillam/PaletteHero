@@ -10,6 +10,8 @@ using UnityEngine.Tilemaps;
 
 public class PlayerMovement : MonoBehaviour
 { 
+    [SerializeField] private GameObject floatingPoints250;
+    [SerializeField] private GameObject floatingPoints100;
     private bool isFacingRight = true;
     private float attackRange = 2.5f;
     [SerializeField] private LayerMask enemyLayer;
@@ -50,6 +52,8 @@ public class PlayerMovement : MonoBehaviour
         anim = GetComponent<Animator>();
         terrainTilemaps = FindObjectsOfType<Tilemap>();
         currentColourState = Enums.ColourState.red;
+
+        
     }
 
     // Update is called once per frame
@@ -205,7 +209,8 @@ public class PlayerMovement : MonoBehaviour
         if (other.gameObject.CompareTag("Coin"))
         {
             Destroy(other.gameObject);
-            ScoreManager.instance.AddPoints(250);
+            ScoreManager.instance.AddPoints(100);
+            DestroyFloatingPoints(other.gameObject, 3f);
             cm.coinCount++;
         }
     }
@@ -238,9 +243,51 @@ public class PlayerMovement : MonoBehaviour
             if (collider.CompareTag("Enemy"))
             {
                 // Destroy the enemy object
-                Destroy(collider.gameObject);
+                collider.gameObject.SendMessage("TakeDamage");
+                ScoreManager.instance.AddPoints(250);
+                CameraController cameraController = FindObjectOfType<CameraController>();
+                cameraController.AttackShake();
+                Vector3 floatingScorePosition = collider.transform.position + Vector3.up * 1.5f;
+                
+                // Pass the position to destroy floating points at the player's position
+                DestroyFloatingPoints(collider.gameObject, 3f);
             }
         }
     }
 
+    public void DestroyFloatingPoints(GameObject pointsInstance, float delay)
+    {
+        // Determine which prefab to use based on the pointsInstance tag
+        GameObject floatingPointsPrefab = pointsInstance.CompareTag("Coin") ? floatingPoints100 : floatingPoints250;
+
+        // Instantiate the floating points prefab at the same position as the pointsInstance
+        GameObject floatingPoints = Instantiate(floatingPointsPrefab, pointsInstance.transform.position, Quaternion.identity);
+
+        // Destroy the original pointsInstance
+        Destroy(pointsInstance);
+
+        // Start coroutine to destroy floating points after a delay
+        StartCoroutine(DestroyPointsAfterDelay(floatingPoints, delay));
+    }
+
+    private IEnumerator DestroyPointsAfterDelay(GameObject pointsInstance, float delay)
+    {
+        // Move the floating points up immediately
+        float startTime = Time.time;
+        while (Time.time - startTime < delay)
+        {
+            float newY = pointsInstance.transform.position.y + 1.0f * Time.deltaTime;
+            pointsInstance.transform.position = new Vector3(pointsInstance.transform.position.x, newY, pointsInstance.transform.position.z);
+            yield return null;
+        }
+
+        // Ensure the final position is reached
+        pointsInstance.transform.position = new Vector3(pointsInstance.transform.position.x, pointsInstance.transform.position.y + 1.0f * (delay - (Time.time - startTime)), pointsInstance.transform.position.z);
+
+        // Wait for the remaining time before destroying
+        yield return new WaitForSeconds(Mathf.Max(0, delay - (Time.time - startTime)));
+
+        // Destroy the floating points
+        Destroy(pointsInstance);
+    }
 }

@@ -1,7 +1,9 @@
+using System.Collections;
 using UnityEngine;
 
 public class SlimePatrol : MonoBehaviour
 {
+    public GameObject floatingPoints;
     public GameObject pointA;
     public GameObject pointB;
     public float speed; // Declare speed variable
@@ -79,5 +81,10 @@ public class SlimePatrol : MonoBehaviour
         Vector3 localScale = transform.localScale;
         localScale.x *= -1;
         transform.localScale = localScale;
+    }
+
+    public void TakeDamage()
+    {
+        Destroy(gameObject);
     }
 }
