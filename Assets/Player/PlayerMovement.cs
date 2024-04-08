@@ -62,6 +62,7 @@ public class PlayerMovement : MonoBehaviour
         audioSource.clip = attackSound;
         Health healthComponent = GetComponent<Health>();
         healthComponent.Awake();
+        
     }
 
     // Update is called once per frame
