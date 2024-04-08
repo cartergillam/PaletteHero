@@ -50,10 +50,13 @@ public class PlayerMovement : MonoBehaviour
     private float lastDirX;
     public CoinManager cm;
     private bool isPaused = false;
+    public GameObject scoreObject;
+    private ScoreManager scoreManager;
     public GameObject winMenu; // for when the boss is defeated
     // Start is called before the first frame update
     private void Start()
     {
+        scoreManager = scoreObject.GetComponent<ScoreManager>();
         myRigidbody = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
@@ -321,6 +324,7 @@ public class PlayerMovement : MonoBehaviour
                 DestroyFloatingPoints(collider.gameObject, 3f);
 
                 // Boss is defeated so the game will end
+                scoreManager.highScores();
                 winMenu.SetActive(true);
                 Time.timeScale = 0f;
             }

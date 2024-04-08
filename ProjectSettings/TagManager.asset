@@ -12,6 +12,7 @@ TagManager:
   - Wall
   - Enemy
   - Boss
+  - score
   layers:
   - Default
   - TransparentFX
