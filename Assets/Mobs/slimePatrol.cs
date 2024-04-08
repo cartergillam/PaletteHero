@@ -5,6 +5,8 @@ public class SlimePatrol : MonoBehaviour
     public GameObject floatingPoints;
     public GameObject pointA;
     public GameObject pointB;
+    public int maxHealth = 3;
+    private int currentHealth;
     public float speed; // Declare speed variable
     private Rigidbody2D rb;
     private Animator anim;
@@ -12,6 +14,7 @@ public class SlimePatrol : MonoBehaviour
     private const float directionThreshold = 0.1f; // Tolerance threshold for direction check
     private bool facingRight = true; // Keeps track of the sprite's facing direction
     private Vector3 initialPosition;
+
 
     private void Start()
     {
@@ -83,8 +86,19 @@ public class SlimePatrol : MonoBehaviour
         transform.localScale = localScale;
     }
 
-    public void TakeDamage()
+    public void TakeDamage(int damageAmount)
     {
+        currentHealth -= damageAmount; // Reduce current health by the damage amount
+
+        if (currentHealth <= 0)
+        {
+            Die(); // Call Die function if health is zero or below
+        }
+    }
+
+
+    public void Die(){
         Destroy(gameObject);
     }
+
 }
