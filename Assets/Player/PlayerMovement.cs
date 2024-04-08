@@ -50,6 +50,7 @@ public class PlayerMovement : MonoBehaviour
     private float lastDirX;
     public CoinManager cm;
     private bool isPaused = false;
+    public GameObject winMenu; // for when the boss is defeated
     // Start is called before the first frame update
     private void Start()
     {
@@ -307,6 +308,21 @@ public class PlayerMovement : MonoBehaviour
                 
                 // Pass the position to destroy floating points at the player's position
                 DestroyFloatingPoints(collider.gameObject, 3f);
+            } else if (collider.CompareTag("Boss")) 
+            {
+                // Destroy the boss object
+                collider.gameObject.SendMessage("TakeDamage");
+                ScoreManager.instance.AddPoints(250);
+                CameraController cameraController = FindObjectOfType<CameraController>();
+                cameraController.AttackShake();
+                Vector3 floatingScorePosition = collider.transform.position + Vector3.up * 1.5f;
+                
+                // Pass the position to destroy floating points at the player's position
+                DestroyFloatingPoints(collider.gameObject, 3f);
+
+                // Boss is defeated so the game will end
+                winMenu.SetActive(true);
+                Time.timeScale = 0f;
             }
         }
     }
