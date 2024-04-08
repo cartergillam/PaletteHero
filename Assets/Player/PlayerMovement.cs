@@ -38,6 +38,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private TerrainController terrainController;
     [SerializeField] private AudioClip attackSound; 
     [SerializeField] private AudioClip jumpSound;
+    [SerializeField] private AudioClip coinSound;
+    [SerializeField] private AudioClip runSound;
+    private bool isJumpSoundPlaying = false;
     private AudioSource audioSource;
     private enum MovementState {idle, running, jumping, falling, attack}
     private MovementState currentMovementState = MovementState.idle;
@@ -69,15 +72,28 @@ public class PlayerMovement : MonoBehaviour
             if (!isAttacking)
             {
                 dirX = Input.GetAxisRaw("Horizontal");
-                myRigidbody.velocity = new Vector2(dirX* moveSpeed, myRigidbody.velocity.y);
+                myRigidbody.velocity = new Vector2(dirX * moveSpeed, myRigidbody.velocity.y);
                 if (dirX != 0)
                 {
                     lastDirX = dirX;
+                    if (currentMovementState == MovementState.jumping || currentMovementState == MovementState.falling)
+                    {
+                        // Flip sprite based on direction while jumping or falling
+                        spriteRenderer.flipX = dirX < 0f;
+                    }
                 }
                 if (Input.GetKeyDown(KeyCode.W) && IsGrounded())
                 {
                     myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, jumpPower);
-                    audioSource.PlayOneShot(jumpSound);
+                }
+
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    anim.SetTrigger("attack");
+                    currentMovementState = MovementState.attack;
+                    Attack();
+                    // Set a delay before transitioning back to idle
+                    StartCoroutine(TransitionToIdleAfterDelay());
                 }
 
                 CheckColourState();
@@ -85,6 +101,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
+
     private bool IsGrounded()
     {
         // Define the layers to check based on the current shoe color
@@ -155,54 +172,81 @@ public class PlayerMovement : MonoBehaviour
         MovementState state = currentMovementState;
         anim.ResetTrigger("return");
         isGrounded = IsGrounded();
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            anim.SetTrigger("attack");
-            Attack();
-            audioSource.Play();
-            // Set a delay before transitioning back to idle
-            StartCoroutine(TransitionToIdleAfterDelay());
-            
-        }
         if (isGrounded)
         {
-            if (dirX > 0f)
+            if (dirX != 0)
             {
                 state = MovementState.running;
-                spriteRenderer.flipX = false;
-                isFacingRight = true;
-            }
-            else if (dirX < 0f)
-            {
-                state = MovementState.running;
-                spriteRenderer.flipX = true;
-                isFacingRight = false;
+                spriteRenderer.flipX = dirX < 0f;
+                isFacingRight = dirX > 0f;
             }
             else
             {
                 state = MovementState.idle;
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    state = MovementState.attack;
+                }
             }
         }
         else
         {
-            if (myRigidbody.velocity.y > .1f)
+            if (myRigidbody.velocity.y > 0.1f)
             {
                 state = MovementState.jumping;
-                spriteRenderer.flipX = lastDirX < 0f;
             }
-            else if (myRigidbody.velocity.y < -.1f)
+            else if (myRigidbody.velocity.y < -0.1f)
             {
                 state = MovementState.falling;
-                spriteRenderer.flipX = lastDirX < 0f;
             }
+            spriteRenderer.flipX = lastDirX < 0f;
         }
+        
+
         anim.SetInteger("state", (int)state);
 
         string animationName = currentColourState.ToString() + "_" + state.ToString();
         anim.Play(animationName);
+
+        PlayAudio(state); // Play appropriate audio based on the state
+        
     }
 
+    private void PlayRunSound()
+    {
+        audioSource.clip = runSound;
+        audioSource.loop = true;
+        audioSource.Play();
+
+    }
+
+    private void PlayAudio(MovementState state)
+    {
+        switch (state)
+        {
+            case MovementState.running:
+                if (!audioSource.isPlaying)
+                    PlayRunSound();
+                break;
+            case MovementState.jumping:
+                if (!isJumpSoundPlaying)
+                {
+                    audioSource.PlayOneShot(jumpSound);
+                    isJumpSoundPlaying = true;
+                }
+                break;
+            case MovementState.attack:
+                audioSource.PlayOneShot(attackSound);
+                break;
+            default:
+                audioSource.Stop(); // Stop any other sound
+                break;
+        }
+        if (state != MovementState.jumping)
+        {
+            isJumpSoundPlaying = false;
+        }
+    }
     private IEnumerator TransitionToIdleAfterDelay()
     {
         isAttacking = true;
@@ -221,6 +265,7 @@ public class PlayerMovement : MonoBehaviour
             ScoreManager.instance.AddPoints(100);
             DestroyFloatingPoints(other.gameObject, 3f);
             cm.coinCount++;
+            audioSource.PlayOneShot(coinSound);
         }
     }
 
@@ -236,6 +281,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Attack()
     {
+        PlayAudio(MovementState.attack);
         // Define the direction of the attack based on the player's facing direction
         Vector2 attackDirection = isFacingRight ? Vector2.right : Vector2.left;
 
